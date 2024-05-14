@@ -23,3 +23,5 @@ public class Memo {
         this.contents = requestDto.getContents();
     }
 }
+
+//데이터 저장용 -> DB
