@@ -36,11 +36,12 @@ public class MemoService {
     }
 
     @Transactional
-    public Long updateMemo(long id, MemoRequestDto requestDto) {
+    public MemoResponseDto updateMemo(long id, MemoRequestDto requestDto) {
         // 해당 메모가 DB에 존재하는지 확인
         Memo memo = findMemo(id);
         memo.update(requestDto);
-        return id;
+        MemoResponseDto memoResponseDto = new MemoResponseDto(memo);
+        return memoResponseDto;
     }
 
     public Long deleteMemo(Long id) {
