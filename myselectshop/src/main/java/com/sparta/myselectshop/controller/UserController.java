@@ -19,6 +19,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.*;
 
+import java.net.URLEncoder;
 import java.util.List;
 
 @Slf4j
@@ -76,7 +77,7 @@ public class UserController {
         //받아온 token을 response 객체에 넣어주기만 하면된다.
         String token = kakaoService.kakaoLogin(code);
 
-        Cookie cookie = new Cookie(JwtUtil.AUTHORIZATION_HEADER, token);
+        Cookie cookie = new Cookie(JwtUtil.AUTHORIZATION_HEADER, token.substring(7));
 
         cookie.setPath("/"); //메인 페이지로 설정
 
