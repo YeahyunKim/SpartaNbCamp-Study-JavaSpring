@@ -192,40 +192,40 @@ function showProduct(folderId = null) {
 
     $('#product-container').empty();
     $('#search-result-box').empty();
-    // $('#pagination').pagination({
-    //     dataSource,
-    //     locator: 'content',
-    //     alias: {
-    //         pageNumber: 'page',
-    //         pageSize: 'size'
-    //     },
-    //     totalNumberLocator: (response) => {
-    //         return response.totalElements;
-    //     },
-    //     pageSize: 10,
-    //     showPrevious: true,
-    //     showNext: true,
-    //     ajax: {
-    //         beforeSend: function () {
-    //             $('#product-container').html('상품 불러오는 중...');
-    //         },
-    //         error(error, status, request) {
-    //             if (error.status === 403) {
-    //                 $('html').html(error.responseText);
-    //                 return;
-    //             }
-    //             logout();
-    //         }
-    //     },
-    //     callback: function (response, pagination) {
-    //         $('#product-container').empty();
-    //         for (let i = 0; i < response.length; i++) {
-    //             let product = response[i];
-    //             let tempHtml = addProductItem(product);
-    //             $('#product-container').append(tempHtml);
-    //         }
-    //     }
-    // });
+    $('#pagination').pagination({
+        dataSource,
+        locator: 'content',
+        alias: {
+            pageNumber: 'page',
+            pageSize: 'size'
+        },
+        totalNumberLocator: (response) => {
+            return response.totalElements;
+        },
+        pageSize: 10,
+        showPrevious: true,
+        showNext: true,
+        ajax: {
+            beforeSend: function () {
+                $('#product-container').html('상품 불러오는 중...');
+            },
+            error(error, status, request) {
+                if (error.status === 403) {
+                    $('html').html(error.responseText);
+                    return;
+                }
+                logout();
+            }
+        },
+        callback: function (response, pagination) {
+            $('#product-container').empty();
+            for (let i = 0; i < response.length; i++) {
+                let product = response[i];
+                let tempHtml = addProductItem(product);
+                $('#product-container').append(tempHtml);
+            }
+        }
+    });
 }
 
 // Folder 관련 기능
@@ -295,7 +295,8 @@ function addFolder() {
         window.location.reload();
     })
         .fail(function(xhr, textStatus, errorThrown) {
-            alert("중복된 폴더입니다.");
+            alert(xhr.responseJSON.errorMessage);
+            console.log(xhr.status)
         });
 }
 
@@ -370,7 +371,8 @@ function addInputForProductToFolder(productId, button) {
                     window.location.reload();
                 })
                     .fail(function(xhr, textStatus, errorThrown) {
-                        alert("중복된 폴더입니다.");
+                        alert(xhr.responseJSON.errorMessage);
+                        console.log(xhr.status)
                     });
             });
         },
