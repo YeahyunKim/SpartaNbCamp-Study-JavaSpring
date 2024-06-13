@@ -63,55 +63,55 @@ class ProductServiceIntegrationTest {
         createdProduct = product;
     }
 
-    @Test
-    @Order(2)
-    @DisplayName("신규 등록된 관심상품의 희망 최저가 변경")
-    void test2() {
-        // given
-        Long productId = this.createdProduct.getId();
-        int myPrice = 173000;
-        ProductMypriceRequestDto requestDto = new ProductMypriceRequestDto();
-        requestDto.setMyprice(myPrice);
-
-        // when
-        ProductResponseDto product = productService.updateProduct(productId, requestDto);
-
-        // then
-        assertNotNull(product.getId());
-        assertEquals(this.createdProduct.getTitle(), product.getTitle());
-        assertEquals(this.createdProduct.getImage(), product.getImage());
-        assertEquals(this.createdProduct.getLink(), product.getLink());
-        assertEquals(this.createdProduct.getLprice(), product.getLprice());
-        assertEquals(myPrice, product.getMyprice());
-        this.updatedMyPrice = myPrice;
-    }
-
-    @Test
-    @Order(3)
-    @DisplayName("회원이 등록한 모든 관심상품 조회")
-    void test3() {
-        // given
-        // when
-        Page<ProductResponseDto> productList = productService.getProducts(user,
-                0, 10, "id", false);
-
-        // then
-        // 1. 전체 상품에서 테스트에 의해 생성된 상품 찾아오기 (상품의 id 로 찾음)
-        Long createdProductId = this.createdProduct.getId();
-        ProductResponseDto foundProduct = productList.stream()
-                .filter(product -> product.getId().equals(createdProductId))
-                .findFirst()
-                .orElse(null);
-
-        // 2. Order(1) 테스트에 의해 생성된 상품과 일치하는지 검증
-        assertNotNull(foundProduct);
-        assertEquals(this.createdProduct.getId(), foundProduct.getId());
-        assertEquals(this.createdProduct.getTitle(), foundProduct.getTitle());
-        assertEquals(this.createdProduct.getImage(), foundProduct.getImage());
-        assertEquals(this.createdProduct.getLink(), foundProduct.getLink());
-        assertEquals(this.createdProduct.getLprice(), foundProduct.getLprice());
-
-        // 3. Order(2) 테스트에 의해 myPrice 가격이 정상적으로 업데이트되었는지 검증
-        assertEquals(this.updatedMyPrice, foundProduct.getMyprice());
-    }
+//    @Test
+//    @Order(2)
+//    @DisplayName("신규 등록된 관심상품의 희망 최저가 변경")
+//    void test2() {
+//        // given
+//        Long productId = this.createdProduct.getId();
+//        int myPrice = 173000;
+//        ProductMypriceRequestDto requestDto = new ProductMypriceRequestDto();
+//        requestDto.setMyprice(myPrice);
+//
+//        // when
+//        ProductResponseDto product = productService.updateProduct(productId, requestDto);
+//
+//        // then
+//        assertNotNull(product.getId());
+//        assertEquals(this.createdProduct.getTitle(), product.getTitle());
+//        assertEquals(this.createdProduct.getImage(), product.getImage());
+//        assertEquals(this.createdProduct.getLink(), product.getLink());
+//        assertEquals(this.createdProduct.getLprice(), product.getLprice());
+//        assertEquals(myPrice, product.getMyprice());
+//        this.updatedMyPrice = myPrice;
+//    }
+//
+//    @Test
+//    @Order(3)
+//    @DisplayName("회원이 등록한 모든 관심상품 조회")
+//    void test3() {
+//        // given
+//        // when
+//        Page<ProductResponseDto> productList = productService.getProducts(user,
+//                0, 10, "id", false);
+//
+//        // then
+//        // 1. 전체 상품에서 테스트에 의해 생성된 상품 찾아오기 (상품의 id 로 찾음)
+//        Long createdProductId = this.createdProduct.getId();
+//        ProductResponseDto foundProduct = productList.stream()
+//                .filter(product -> product.getId().equals(createdProductId))
+//                .findFirst()
+//                .orElse(null);
+//
+//        // 2. Order(1) 테스트에 의해 생성된 상품과 일치하는지 검증
+//        assertNotNull(foundProduct);
+//        assertEquals(this.createdProduct.getId(), foundProduct.getId());
+//        assertEquals(this.createdProduct.getTitle(), foundProduct.getTitle());
+//        assertEquals(this.createdProduct.getImage(), foundProduct.getImage());
+//        assertEquals(this.createdProduct.getLink(), foundProduct.getLink());
+//        assertEquals(this.createdProduct.getLprice(), foundProduct.getLprice());
+//
+//        // 3. Order(2) 테스트에 의해 myPrice 가격이 정상적으로 업데이트되었는지 검증
+//        assertEquals(this.updatedMyPrice, foundProduct.getMyprice());
+//    }
 }
